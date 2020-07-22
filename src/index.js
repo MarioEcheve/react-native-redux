@@ -3,7 +3,7 @@ import  React, { useState } from 'react';
 import { StyleSheet, Text, View , FlatList } from 'react-native';
 import { connect } from 'react-redux'
 import ListItem from './components/ListItem';
-import {completado , submit } from './reducers/prueba';
+import {completado , savePrueba } from './reducers/prueba';
 import Input from './components/Input'
 const styles = StyleSheet.create({
   container: {
@@ -50,6 +50,6 @@ const mapStateToProps = state => {
 // despacha accion
 const mapDispatchToProps = dispatch => ({
   completado : (id) => dispatch(completado(id)),
-  submit : (val) => dispatch(submit(val))
+  submit : (val) => dispatch(savePrueba(val))
 })
 export default connect(mapStateToProps, mapDispatchToProps )(App);

@@ -18,22 +18,26 @@ const initialState = [
 
 const COMPLETADO = 'COMPLETADO';
 const SUBMIT = 'SUBMIT';
+const START_SUBMIT = 'START_SUBMIT';
+const ERROR_SUBMIT = 'ERROR_SUBMIT';
 
 export const completado = id => ({
     type : COMPLETADO,
     payload: id
 })
 
-export const submit = text => ({
+export const submit = prueba => ({
     type : SUBMIT,
-    payload: {
-        id: Math.random().toString(36),
-        desc : text,
-        completado : false
-    }
+    payload: prueba
 })
 
-
+export const startSubmit = () =>({
+    type : START_SUBMIT
+})
+export const errorSubmit = () =>{
+    type : ERROR_SUBMIT,
+    error
+}
 export default (state = initialState, action)=>{
     console.log(state);
     switch(action.type){
@@ -50,4 +54,22 @@ export default (state = initialState, action)=>{
             return state;
     }
 }
-  
+
+export const savePrueba = text => async (dispatch, getState) => {
+    const state = getState();
+    dispatch(startSubmit());
+    try{
+        const prueba = {
+            desc : text,
+            completado : false
+        }
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos',{
+            method :'POST',
+            body : JSON.stringify(prueba)
+        });
+        const id = await response.json();
+        dispatch(submit({...prueba, ...id}));
+    }catch(e){
+        dispatch(errorSubmit(e))
+    }
+}
