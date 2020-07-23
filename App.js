@@ -7,7 +7,7 @@ import store from './src/store'
 export default function () {
   return (
     <Provider store={store}>
-      <App> </App>
+      <App></App>
     </Provider>
   )
 }
